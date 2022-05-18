@@ -11,10 +11,10 @@ const getPosition = function (direction) {
   return moves[direction];
 };
 
-const changePosition = function (currentPosition, direction) {
-  const nextPosition = getPosition(direction);
+const nextPosition = function (currentPosition, direction) {
+  const newPosition = getPosition(direction);
   try {
-    return nextPosition(currentPosition);
+    return newPosition(currentPosition);
   } catch (error) {
     return 'Enter valid direction';
   }
@@ -32,7 +32,7 @@ const resetPositions = function ([row, column], positions) {
   return newPositions;
 };
 
-exports.changePosition = changePosition;
+exports.nextPosition = nextPosition;
 exports.isValidPosition = isValidPosition;
 exports.resetPositions = resetPositions;
 
