@@ -1,5 +1,4 @@
 /* eslint-disable no-magic-numbers */
-const position = [[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']];
 
 const getPosition = function (direction) {
   const moves = {
@@ -26,13 +25,46 @@ const isValidPosition = function ([row, column]) {
   return validateRow && validateColumn;
 };
 
-const resetPositions = function ([row, column], positions) {
-  const newPositions = positions.map(position => position.fill('  '));
-  newPositions[row][column] = '*';
-  return newPositions;
+const randomCoordinates = function () {
+  const row = Math.floor(Math.random() * 5);
+  const column = Math.floor(Math.random() * 5);
+  return [row, column];
+};
+
+const generateFoodPosition = function ([snakeRow, snakeColumn]) {
+  let [foodRow, foodColumn] = randomCoordinates();
+  if (foodRow === snakeRow && foodColumn === snakeColumn) {
+    [foodRow, foodColumn] = randomCoordinates();
+  }
+  return [foodRow, foodColumn];
+};
+
+const isFoodAndSnakePositionSame = function (foodPosition, newPosition) {
+  const [foodRow, foodColumn] = foodPosition;
+  const [snakeRow, snakeColumn] = newPosition;
+  return foodRow === snakeRow && foodColumn === snakeColumn;
+
+};
+
+const updateData = function (data, newPosition) {
+  if (isFoodAndSnakePositionSame(data.foodPosition, newPosition)) {
+    data.foodPosition = generateFoodPosition(newPosition);
+    data.score += 10;
+  }
+  data.currentPosition = newPosition;
+  return data;
+};
+
+const resetPositions = function ([snakeRow, snakeColumn], [foodRow, foodColumn
+]) {
+  const positions = Array(5).fill([]).map(() => Array(5).fill('  '));
+  positions[snakeRow][snakeColumn] = 'o ';
+  positions[foodRow][foodColumn] = '* ';
+  return positions;
 };
 
 exports.nextPosition = nextPosition;
 exports.isValidPosition = isValidPosition;
 exports.resetPositions = resetPositions;
+exports.updateData = updateData;
 
