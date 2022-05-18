@@ -5,15 +5,19 @@ const getPosition = function (direction) {
   const moves = {
     up: ([row, column]) => [row - 1, column],
     down: ([row, column]) => [row + 1, column],
-    left: ([row, column]) => [row, column + 1],
-    right: ([row, column]) => [row, column - 1]
+    left: ([row, column]) => [row, column - 1],
+    right: ([row, column]) => [row, column + 1]
   };
   return moves[direction];
 };
 
-const nextPosition = function (currentPosition, direction) {
-  const changePosition = getPosition(direction);
-  return changePosition(currentPosition);
+const changePosition = function (currentPosition, direction) {
+  const nextPosition = getPosition(direction);
+  try {
+    return nextPosition(currentPosition);
+  } catch (error) {
+    return 'Enter valid direction';
+  }
 };
 
 const resetPositions = function ([row, column], positions) {
@@ -22,6 +26,6 @@ const resetPositions = function ([row, column], positions) {
   return newPositions;
 };
 
-exports.nextPosition = nextPosition;
+exports.changePosition = changePosition;
 exports.resetPositions = resetPositions;
 
