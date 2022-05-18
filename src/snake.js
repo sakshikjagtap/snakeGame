@@ -20,6 +20,12 @@ const changePosition = function (currentPosition, direction) {
   }
 };
 
+const isValidPosition = function ([row, column]) {
+  const validateRow = row < 5 && row > -1;
+  const validateColumn = column < 5 && column > -1;
+  return validateRow && validateColumn;
+};
+
 const resetPositions = function ([row, column], positions) {
   const newPositions = positions.map(position => position.fill('  '));
   newPositions[row][column] = '*';
@@ -27,5 +33,6 @@ const resetPositions = function ([row, column], positions) {
 };
 
 exports.changePosition = changePosition;
+exports.isValidPosition = isValidPosition;
 exports.resetPositions = resetPositions;
 
